@@ -22,11 +22,19 @@ train_data_file <- file.path(data_dir, "train/X_train.txt")
 train_labels_file <- file.path(data_dir, "/train/y_train.txt")
 train_subject_file <- file.path(data_dir, "/train/subject_train.txt")
 
+features_file <- file.path(data_dir, "features.txt")
+
 # Previously-determined data columns with "average" or "Standard deviation"
 keep_features <- c(1:6, 41:46, 81:86, 121:126, 161:166, 201:202, 214:215, 
                    227:228, 240:241, 253:254, 266:271, 294:296, 345:350, 
                    373:375, 424:429, 452:454, 503:504, 513, 516:517, 526, 
                    529:530, 539, 542:543, 552)
+
+# Read in column names for "average" and "standard deviation" values from file
+features <- read.table(features_file, 
+                       comment.char="", 
+                       stringsAsFactors=FALSE)[keep_features, 2]
+
 
 ## Read in activity definitions
 activity_definitions <- read.table(activity_labels_file,
@@ -62,87 +70,7 @@ all_data <- cbind(all_data,
                   rbind(test_subject, train_subject))
 
 ## Define column names to something meaningful
-col_names <- c("Mean of time-domain body linear acceleration for x-axis",
-               "Mean of time-domain body linear acceleration for y-axis",
-               "Mean of time-domain body linear acceleration for z-axis",
-               "Standard deviation of time-domain body linear acceleration for x-axis",
-               "Standard deviation of time-domain body linear acceleration for y-axis",
-               "Standard deviation of time-domain body linear acceleration for z-axis",
-               "Mean of time-domain gravity linear acceleration for x-axis",
-               "Mean of time-domain gravity linear acceleration for y-axis",
-               "Mean of time-domain gravity linear acceleration for z-axis",
-               "Standard deviation of time-domain gravity linear acceleration for x-axis",
-               "Standard deviation of time-domain gravity linear acceleration for y-axis",
-               "Standard deviation of time-domain gravity linear acceleration for z-axis",
-               "Mean of time derivative of body linear acceleration for x-axis",
-               "Mean of time derivative of body linear acceleration for y-axis",
-               "Mean of time derivative of body linear acceleration for z-axis",
-               "Standard deviation of time derivative of body linear acceleration for x-axis",
-               "Standard deviation of time derivative of body linear acceleration for y-axis",
-               "Standard deviation of time derivative of body linear acceleration for z-axis",
-               "Mean of time-domain body angular velocity for x-axis",
-               "Mean of time-domain body angular velocity for y-axis",
-               "Mean of time-domain body angular velocity for z-axis",
-               "Standard deviation of time-domain body angular velocity for x-axis",
-               "Standard deviation of time-domain body angular velocity for y-axis",
-               "Standard deviation of time-domain body angular velocity for z-axis",
-               "Mean of time derivative of body angular velocity for x-axis",
-               "Mean of time derivative of body angular velocity for y-axis",
-               "Mean of time derivative of body angular velocity for z-axis",
-               "Standard deviation of time derivative of body angular velocity for x-axis",
-               "Standard deviation of time derivative of body angular velocity for y-axis",
-               "Standard deviation of time derivative of body angular velocity for z-axis",
-               "Mean of Euclidean norm magnitude of time-domain body linear acceleration",
-               "Standard deviation of Euclidean norm magnitude of time-domain body linear acceleration",
-               "Mean of Euclidean norm magnitude of time-domain gravity linear acceleration",
-               "Standard deviation of Euclidean norm magnitude of time-domain gravity linear acceleration",
-               "Mean of Euclidean norm magnitude of time derivative of body linear acceleration",
-               "Standard deviation of Euclidean norm magnitude of time derivative of body linear acceleration",
-               "Mean of Euclidean norm magnitude of time-domain body angular velocity",
-               "Standard deviation of Euclidean norm magnitude of time-domain body angular velocity",
-               "Mean of Euclidean norm magnitude of time derivative of body angular velocity",
-               "Standard deviation of Euclidean norm magnitude of time derivative of body angular velocity",
-               "Mean of frequency-domain body linear acceleration for x-axis",
-               "Mean of frequency-domain body linear acceleration for y-axis",
-               "Mean of frequency-domain body linear acceleration for z-axis",
-               "Standard deviation of frequency-domain body linear acceleration for x-axis",
-               "Standard deviation of frequency-domain body linear acceleration for y-axis",
-               "Standard deviation of frequency-domain body linear acceleration for z-axis",
-               "Mean frequency of frequency-domain body linear acceleration for x-axis",
-               "Mean frequency of frequency-domain body linear acceleration for y-axis",
-               "Mean frequency of frequency-domain body linear acceleration for z-axis",
-               "Mean of time derivative of x-axis body linear acceleration in the frequency domain",
-               "Mean of time derivative of y-axis body linear acceleration in the frequency domain",
-               "Mean of time derivative of z-axis body linear acceleration in the frequency domain",
-               "Standard deviation of time derivative of x-axis body linear acceleration in the frequency domain",
-               "Standard deviation of time derivative of y-axis body linear acceleration in the frequency domain",
-               "Standard deviation of time derivative of z-axis body linear acceleration in the frequency domain",
-               "Mean frequency of time derivative of x-axis body linear acceleration in the frequency domain",
-               "Mean frequency of time derivative of y-axis body linear acceleration in the frequency domain",
-               "Mean frequency of time derivative of z-axis body linear acceleration in the frequency domain",
-               "Mean of frequency-domain body angular velocity for x-axis",
-               "Mean of frequency-domain body angular velocity for y-axis",
-               "Mean of frequency-domain body angular velocity for z-axis",
-               "Standard deviation of frequency-domain body angular velocity for x-axis",
-               "Standard deviation of frequency-domain body angular velocity for y-axis",
-               "Standard deviation of frequency-domain body angular velocity for z-axis",
-               "Mean frequency of frequency-domain body angular velocity for x-axis",
-               "Mean frequency of frequency-domain body angular velocity for y-axis",
-               "Mean frequency of frequency-domain body angular velocity for z-axis",
-               "Mean of Euclidean norm magnitude of body linear acceleration in the frequency domain",
-               "Standard deviation of Euclidean norm magnitude of body linear acceleration in the frequency domain",
-               "Mean frequency of Euclidean norm magnitude of body linear acceleration in the frequency domain",
-               "Mean of Euclidean norm magnitude of time derivative of body linear acceleration in the frequency domain",
-               "Standard deviation of Euclidean norm magnitude of time derivative of body linear acceleration in the frequency domain",
-               "Mean frequency of Euclidean norm magnitude of time derivative of body linear acceleration in the frequency domain",
-               "Mean of Euclidean norm magnitude of body angular velocity in the frequency domain",
-               "Standard deviation of Euclidean norm magnitude of body angular velocity in the frequency domain",
-               "Mean frequency of Euclidean norm magnitude of body angular velocity in the frequency domain",
-               "Mean of Euclidean norm magnitude of time derivative of body angular velocity in the frequency domain",
-               "Standard deviation of Euclidean norm magnitude of time derivative of body angular velocity in the frequency domain",
-               "Mean frequency of Euclidean norm magnitude of time derivative of body angular velocity in the frequency domain",
-               "Activity_Label",
-               "Subject_Number")
+col_names <- c(features, "Activity_Label", "Subject_Number")
 
 # Assign column names
 colnames(all_data) <- col_names
