@@ -24,17 +24,21 @@ train_subject_file <- file.path(data_dir, "/train/subject_train.txt")
 
 features_file <- file.path(data_dir, "features.txt")
 
-# Previously-determined data columns with "average" or "Standard deviation"
-keep_features <- c(1:6, 41:46, 81:86, 121:126, 161:166, 201:202, 214:215, 
-                   227:228, 240:241, 253:254, 266:271, 294:296, 345:350, 
-                   373:375, 424:429, 452:454, 503:504, 513, 516:517, 526, 
-                   529:530, 539, 542:543, 552)
-
-# Read in column names for "average" and "standard deviation" values from file
+# Read in column names variables from file
 features <- read.table(features_file, 
                        comment.char="", 
-                       stringsAsFactors=FALSE)[keep_features, 2]
+                       stringsAsFactors=FALSE)[, 2]
 
+# Generate logical vector to select variables representing means and 
+# standard deviations
+keep_features <- grepl("-mean|-std", features)
+
+# Select only variables representing means and standard deviations
+features <- features[keep_features]
+
+# Modify column names to remove () characters and replace '-' with '.'
+features <- gsub("[(]|[)]", "", features)
+features <- gsub("-", ".", features)
 
 ## Read in activity definitions
 activity_definitions <- read.table(activity_labels_file,
@@ -70,22 +74,22 @@ all_data <- cbind(all_data,
                   rbind(test_subject, train_subject))
 
 ## Define column names to something meaningful
-col_names <- c(features, "Activity_Label", "Subject_Number")
+col_names <- c(features, "ActivityLabel", "SubjectNumber")
 
 # Assign column names
 colnames(all_data) <- col_names
 
 ## Convert activity numbers to factors with meaningful labels
-all_data[,"Activity_Label"] <- factor(all_data[,"Activity_Label"], 
+all_data[,"ActivityLabel"] <- factor(all_data[,"ActivityLabel"], 
                                       levels=activity_definitions[,1],
                                       labels=activity_definitions[,2])
 
 ## Convert subject numbers to factor
-all_data <- mutate(all_data, Subject_Number = as.factor(Subject_Number))
+all_data <- mutate(all_data, SubjectNumber = as.factor(SubjectNumber))
 
 ## Take mean of every variable by activity and subject
 summarized_data <- all_data %>% 
-    group_by(Activity_Label, Subject_Number) %>%
+    group_by(ActivityLabel, SubjectNumber) %>%
     summarise_each(funs(mean))
 
 write.table(summarized_data, "tidy_summary.txt", row.name=FALSE)
