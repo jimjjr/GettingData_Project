@@ -9,6 +9,7 @@ The script "run_analysis.R" assumes that the (unzipped) data folder from the UC 
 
 ## Description of script function
 The UC Irvine Samsung Galaxy S accelerometer data as-downloaded containes data spread out across many separate files. The script "run_analysis.R" tidys up and summarizes the data in these data files and outputs a tidy data set of this summary. The functions performed by the script are as follows:
+
 1. Determines which columns of data in the datasets represent "mean" or "standard deviation" from the variable names listed in the document "features.txt"
 2. Slightly alters the variable names to make them more intelligible and easier to use.
 3. Collates the test and training data from the files "X_test.txt" and "X_train.txt" into one dataset with one column for every variable and one row for every observation.
@@ -19,6 +20,7 @@ The UC Irvine Samsung Galaxy S accelerometer data as-downloaded containes data s
 
 ## Instructions
 In order to successfully run the script, the following steps should be taken:
+
 1. Download the UC Irvine study of the Samsung Galaxy S accelerometer data from "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 2. Unzip the downloaded .zip file into the same directory as the R script "run_analysis.R"
 3. Run the R script "run_analysis.R"
