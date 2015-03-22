@@ -1,5 +1,5 @@
-Codebook
-=========
+Codebook Document
+=================
 
 From original data README:
 ==================================================================
@@ -79,9 +79,9 @@ Jorge L. Reyes-Ortiz, Alessandro Ghio, Luca Oneto, Davide Anguita. November 2012
 =======================
 Code book
 =======================
-
 Origin of data variables and explanation of naming conventions***
 ***Note: this section corresponds to original data set. For variables used in the output by the script, please refer to the next section below titled: Updated code book variables for "tidy_summary.txt"
+
 ===================
 From ORIGINAL data:
 Feature Selection 
@@ -147,9 +147,9 @@ Updated code book variables for "tidy_summary.txt"
 ==================================================
 The previous section was included for the detailed explanation of the derivation of the variables and the naming conventions in the original data set.
 
-The R script "run_analysis.R" outputs an ASCII text file "tidy_summary.txt", which containts the mean of the values for every mean and standard deviation variable for each activity and subject in the original dataset. The data are grouped first by activity, then by subject number, in order to better compare the variability in the average of the mean and standard deviation measurements for each activity across different subjects. The first and second columns, then, describe the activity label and subject number, respectively. The subsequent columns represent the mean of the means and standard deviations of each variable by activity and subject number. Note that frequency-domain mean frequency values are included as they represent an important averaging of the data in the frequency domain. 
+The R script "run_analysis.R" outputs an ASCII text file "tidy_summary.txt", which containts the mean of the values for every mean and standard deviation variable for each activity and subject in the original dataset. The data are grouped first by activity, then by subject number, in order to better compare the variability in the average of the mean and standard deviation measurements for each activity across different subjects. The first and second columns, then, describe the activity label and subject number, respectively. The subsequent columns represent the mean of the means or standard deviations of each variable by activity and subject number. Rows represent separate observations of each variable. Note that frequency-domain mean frequency values are included as they represent an important averaging of the data in the frequency domain. 
 
-The naming conventions from the original dataset were largely kept from the original data set with the exception of the removal of the characters "(", "(", the replacement of "-" with ".", as well as the above stated removal of data that did not represent an average or standard devation of the reported variables. Although some abbreviations are used, the abbreviations are clear and the resulting names have greater fast readability and usability than long explanations-as-names.
+The naming conventions from the original dataset were largely kept from the original data set with the exception of the removal of the characters "(", "(", the replacement of "-" with ".", as well as the above stated removal of data that did not represent an average or standard devation of the reported variables. Although some abbreviations are used, the abbreviations are clear and the resulting names have greater readability and usability than long explanations-as-names.
 
 The key abbreviations are as follows:
 t 	= time-domain value
@@ -157,8 +157,12 @@ f 	= frequency-domain value following Fast Fourier Transform
 Body 	= body component of measurement
 Gravity	= gravity component of measurement
 Acc 	= linear acceleration value
-Gyro	= gyroscope signal
+Gyro	= gyroscope signal (angular velocity)
 Mag	= Euclidean norm magnitude of three-dimensional signal
+Jerk	= time-derivative of measured signal
+mean	= mean of measured variable
+std	= standard deviation of measured variable
+meanFreq= Weighted average of the frequency components to obtain a mean frequency
 
 Rows in the data set represent data values while columns represent independent variables.
 The variables in the output dataset "tidy_summary.txt" are as follows (in order):
